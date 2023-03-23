@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from types import MappingProxyType
 import dill
 import numpy as np
@@ -43,8 +43,8 @@ class PcaEmulator:
     weights: np.ndarray
     explained_variance: np.ndarray
     interpolator_class: object
-    interpolator_kwargs: object = MappingProxyType({})
-
+    interpolator_kwargs: object = field(default_factory=lambda:  MappingProxyType({}))    
+        
     def __post_init__(self):
         self.n_components = self.basis_vectors.shape[-1]
         self.weight_interpolators = self.create_weight_interpolators()
